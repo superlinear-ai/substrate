@@ -38,7 +38,7 @@ issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issu
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
 dev = [
   {%- if with_conventional_commits %}
-  "commitizen (>=4.1.0)",
+  "commitizen (>=4.3.0)",
   {%- endif %}
   "coverage[toml] (>=7.6.10)",
   "ipykernel (>=6.29.4)",
@@ -62,10 +62,9 @@ dev = [
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
 bump_message = "bump: v$current_version → v$new_version"
-pre_bump_hooks = ["uv lock --offline --upgrade-package {{ project_name_kebab_case }}"]
 tag_format = "v$version"
 update_changelog_on_bump = true
-version_provider = "pep621"
+version_provider = "uv"
 {%- endif %}
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
