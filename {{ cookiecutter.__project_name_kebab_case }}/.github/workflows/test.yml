@@ -33,7 +33,9 @@ jobs:
       - name: Start Dev Container
         run: |
           git config --global init.defaultBranch main
-          PYTHON_VERSION={% raw %}${{{% endraw %} matrix.python-version }} devcontainer up --workspace-folder .
+          devcontainer up --workspace-folder .
+        env:
+          PYTHON_VERSION: {% raw %}${{{% endraw %} matrix.python-version }}
 
       - name: Lint {{ cookiecutter.project_type }}
         run: devcontainer exec --workspace-folder . poe lint
