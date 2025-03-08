@@ -54,6 +54,7 @@ repos:
         language: system
         stages: [commit-msg]
       {%- endif %}
+      {%- if project_type == 'app' %}
       - id: uv-lock-check
         name: uv lock check
         entry: uv lock
@@ -61,6 +62,7 @@ repos:
         require_serial: true
         language: system
         pass_filenames: false
+      {%- endif %}
       - id: ruff-check
         name: ruff check
         entry: ruff check

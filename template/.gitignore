@@ -61,6 +61,11 @@ dist/
 
 # Terraform
 .terraform/
+{%- if project_type == 'package' %}
+
+# uv
+uv.lock
+{%- endif %}
 
 # VS Code
 .vscode/
