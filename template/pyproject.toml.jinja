@@ -149,7 +149,10 @@ convention = "numpy"
 [tool.uv]  # https://docs.astral.sh/uv/reference/settings/
 package = true
 
-[tool.poe.tasks]  # https://github.com/nat-n/poethepoet
+[tool.poe.executor]  # https://github.com/nat-n/poethepoet
+type = "simple"
+
+[tool.poe.tasks]
 {%- if with_fastapi_api %}
 
   [tool.poe.tasks.serve]
