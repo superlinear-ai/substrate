@@ -3,7 +3,7 @@ services:
   devcontainer:
     build:
       target: dev
-    {%- if project_type == 'package' %}
+    {%- if project_type == 'package' and ci != 'github' %}
     environment:
       - UV_PUBLISH_TOKEN
     {%- endif %}

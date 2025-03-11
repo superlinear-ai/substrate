@@ -7,15 +7,16 @@ on:
 
 jobs:
   publish:
-    runs-on: ghcr.io/astral-sh/uv:{{ python_version }}-bookworm
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Publish package
         run: |
           uv build
           uv publish
-        env:
-          UV_PUBLISH_TOKEN: {% raw %}${{ secrets.UV_PUBLISH_TOKEN }}{% endraw %}
