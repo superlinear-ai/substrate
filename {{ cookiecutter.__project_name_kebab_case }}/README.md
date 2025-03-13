@@ -156,7 +156,7 @@ The following development environments are supported:
 
 </details>
 
-<details>
+<details open>
 <summary>Developing</summary>
 {% if cookiecutter.with_conventional_commits|int %}
 - This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard to automate [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) with [Commitizen](https://github.com/commitizen-tools/commitizen).
