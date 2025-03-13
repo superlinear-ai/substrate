@@ -71,8 +71,8 @@ typing:
   type: str
   help: Do you want to use optional or strict typing and linting?
   choices:
-    Optional: optional
-    Strict: strict
+    - optional
+    - strict
   default: optional
 
 with_conventional_commits:
