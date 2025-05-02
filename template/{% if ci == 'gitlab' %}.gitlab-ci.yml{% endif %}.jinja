@@ -9,7 +9,7 @@ variables:
   parallel:
     matrix:
       - PYTHON_VERSION: {% if project_type == 'package' %}["3.10", "3.12"]{% else %}["{{ python_version }}"]{% endif %}
-        {% if project_type == 'package' %}RESOLUTION_STRATEGY: ["highest", "lowest-direct"]{%- endif %}
+        RESOLUTION_STRATEGY: {% if project_type == 'package' %}["highest", "lowest-direct"]{% else %}["highest"]{%- endif %}
 
 workflow:
   rules:
