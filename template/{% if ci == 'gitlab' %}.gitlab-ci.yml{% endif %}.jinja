@@ -1,0 +1,60 @@
+stages:
+  - build
+  - test
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+.python_matrix:
+  parallel:
+    matrix:
+      - PYTHON_VERSION: {% if project_type == 'package' %}["3.10", "3.12"]{% else %}["{{ python_version }}"]{% endif %}
+        {% if project_type == 'package' %}RESOLUTION_STRATEGY: ["highest", "lowest-direct"]{%- endif %}
+
+workflow:
+  rules:
+    # Run for pushes to main or master branches
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+      when: always
+    # Run for merge requests
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+    # Don't run for other cases like scheduled pipelines or tags unless specified
+    - when: never
+
+build-dev-container:
+  extends:
+    - .python_matrix
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - apk add --update nodejs npm
+    - npm install -g @devcontainers/cli
+  script:
+    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+    - IMAGE_TAG="${PYTHON_VERSION}-${RESOLUTION_STRATEGY}"
+    - IMAGE_NAME="${CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
+    - devcontainer build --workspace-folder . --image-name ${IMAGE_NAME}
+    - docker push ${IMAGE_NAME}
+
+test:
+  extends:
+    - .python_matrix
+  stage: test
+  image: ${CI_REGISTRY_IMAGE}:${PYTHON_VERSION}-${RESOLUTION_STRATEGY}
+  script:
+    - uv sync --python $PYTHON_VERSION --resolution $RESOLUTION_STRATEGY --all-extras
+    - poe lint
+    - poe test
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: reports/coverage.xml
+      junit:
+        - reports/mypy.xml
+        - reports/pytest.xml
+    untracked: true
+    when: always
