@@ -26,7 +26,7 @@ jobs:
           path: substrate
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           cache-dependency-glob: "**/uv.lock"
@@ -85,7 +85,7 @@ jobs:
           path: poetry-cookiecutter
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           cache-dependency-glob: "**/uv.lock"
