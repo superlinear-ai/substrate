@@ -1,0 +1,19 @@
+name: PR
+
+on:
+  pull_request:
+    types: [edited, opened, reopened, synchronize]
+
+jobs:
+  title:
+    runs-on: ubuntu-latest
+
+    name: Check PR title
+
+    steps:
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Check PR title
+        run: |
+          uvx --from=commitizen cz check --message "${{ github.event.pull_request.title }}"

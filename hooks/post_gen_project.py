@@ -4,6 +4,7 @@ import shutil
 # Read Cookiecutter configuration.
 project_name = "{{ cookiecutter.__project_name_snake_case }}"
 development_environment = "{{ cookiecutter.development_environment }}"
+with_conventional_commits = int("{{ cookiecutter.with_conventional_commits }}")
 with_fastapi_api = int("{{ cookiecutter.with_fastapi_api }}")
 with_typer_cli = int("{{ cookiecutter.with_typer_cli }}")
 continuous_integration = "{{ cookiecutter.continuous_integration }}"
@@ -36,3 +37,5 @@ if continuous_integration == "GitHub":
         os.remove(".github/workflows/publish.yml")
     else:
         os.remove(".github/workflows/deploy.yml")
+    if not with_conventional_commits:
+        os.remove(".github/workflows/pr.yml")
