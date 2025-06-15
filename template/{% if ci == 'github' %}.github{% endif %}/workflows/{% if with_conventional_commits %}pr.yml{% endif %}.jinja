@@ -16,4 +16,4 @@ jobs:
 
       - name: Check PR title
         run: |
-          uvx --from=commitizen cz check --message "${{ github.event.pull_request.title }}"
+          uvx --from=commitizen cz check --message "{% raw %}${{ github.event.pull_request.title }}{% endraw %}"
