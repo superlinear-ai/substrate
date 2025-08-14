@@ -175,7 +175,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
   [tool.poe.tasks.api]
   help = "Serve the REST API"
   shell = """
-    if [ $dev ]
+    if [ "${dev}" = "True" ]
     then {
       uvicorn \
         --host $host \
