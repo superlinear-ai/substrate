@@ -36,7 +36,13 @@ source = "{{ project_url }}"
 changelog = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}blob/main/CHANGELOG.md"
 {%- endif %}
 releasenotes = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}releases"
+{%- if documentation_tool != 'None' %}
+{%- if ci == 'github' %}
+documentation = "https://{{ project_url.split('/')[-2] }}.github.io/{{ project_url.split('/')[-1] }}"
+{%- else %}
 documentation = "{{ project_url }}"
+{%- endif %}
+{%- endif %}
 issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issues"
 
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
@@ -49,7 +55,12 @@ dev = [
   "ipython (>=8.18.0)",
   "ipywidgets (>=8.1.2)",
   "mypy (>=1.14.1)",
+  {%- if documentation_tool == 'mkdocs' %}
+  "mkdocs-material (>=9.5.21)",
+  "mkdocstrings[python] (>=0.26.2)",
+  {%- elif documentation_tool == 'pdoc' %}
   "pdoc (>=15.0.1)",
+  {%- endif %}
   {%- if project_type == 'package' %}
   "poethepoet (>=0.32.1)",
   {%- endif %}
@@ -207,8 +218,12 @@ type = "simple"
     cmd = "echo 'Serving app (placeholder)...'"
 {%- endif %}
 
+{%- if documentation_tool != 'None' %}
   [tool.poe.tasks.docs]
   help = "Generate this {{ project_type }}'s docs"
+  {%- if documentation_tool == 'mkdocs' %}
+  cmd = "mkdocs build"
+  {%- elif documentation_tool == 'pdoc' %}
   cmd = """
     pdoc
       --docformat $docformat
@@ -227,6 +242,34 @@ type = "simple"
     name = "outputdirectory"
     options = ["--output-directory"]
     default = "docs"
+  {%- endif %}
+
+  [tool.poe.tasks.docs-serve]
+  help = "Serve the docs locally"
+  {%- if documentation_tool == 'mkdocs' %}
+  cmd = "mkdocs serve"
+  {%- elif documentation_tool == 'pdoc' %}
+  cmd = """
+    pdoc
+      --docformat numpy
+      --host $host
+      --port $port
+      {{ project_name_snake_case }}
+    """
+
+    [[tool.poe.tasks.docs-serve.args]]
+    help = "Bind socket to this host (default: localhost)"
+    name = "host"
+    options = ["--host"]
+    default = "localhost"
+
+    [[tool.poe.tasks.docs-serve.args]]
+    help = "Bind socket to this port (default: 8080)"
+    name = "port"
+    options = ["--port"]
+    default = "8080"
+  {%- endif %}
+{%- endif %}
 
   [tool.poe.tasks.lint]
   help = "Lint this {{ project_type }}"

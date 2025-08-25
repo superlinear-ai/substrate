@@ -22,6 +22,7 @@ A modern [Copier template](https://github.com/copier-org/copier) for scaffolding
 - ♻️ Continuous integration with [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - 🧪 Test coverage with [Coverage.py](https://github.com/nedbat/coveragepy)
 - 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates)
+- 📚 Documentation with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) or [pdoc](https://pdoc.dev/)
 
 ## ✨ Using
 
@@ -90,6 +91,13 @@ To migrate a project from Cookiecutter to Copier, follow these steps:
     ```
 
 5. Create a PR from your branch, review it, and merge it!
+
+## 📚 Generate Docs
+
+If you are using GitHub as your repository host and choose one of the supported documentation frameworks, your docs will be published automatically to GitHub Pages. They will be available at `https://<username>.github.io/<repository>`.
+
+> [!TIP]
+> Ensure the source for GitHub Pages is set to "GitHub Actions" in your repository settings under **Settings** → **Pages**. For more details, see [Configuring a publishing source for your GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
 ## Contributing
 

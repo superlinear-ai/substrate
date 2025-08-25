@@ -69,3 +69,14 @@ uv.lock
 
 # VS Code
 .vscode/
+{%- if documentation_tool == 'mkdocs' %}
+
+# MkDocs
+site/
+{%- endif %}
+
+{%- if documentation_tool == 'pdoc' %}
+
+# pdoc
+docs/
+{%- endif %}

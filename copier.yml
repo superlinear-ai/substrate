@@ -91,6 +91,15 @@ with_typer_cli:
   help: Does your {{ project_type }} need a Typer CLI?
   default: false
 
+documentation_tool:
+  type: str
+  help: Which documentation tool do you want to use for your {{ project_type }}?
+  choices:
+    MkDocs (Material theme): mkdocs
+    pdoc: pdoc
+    None: None
+  default: mkdocs
+
 project_name_kebab_case:
   when: false
   default: "{{ project_name | lower | replace(' ', '-') }}"
