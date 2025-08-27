@@ -2,6 +2,8 @@
 
 {{ project_description }}
 
+{%- if project_type == 'package' %}
+
 ## Installation
 
 ```bash
@@ -19,3 +21,4 @@ import {{ project_name_snake_case }}
 ## API Reference
 
 See the [API Reference](reference/index.md) for detailed documentation.
+{%- endif %}

@@ -92,13 +92,9 @@ with_typer_cli:
   default: false
 
 documentation_tool:
-  type: str
-  help: Which documentation tool do you want to use for your {{ project_type }}?
-  choices:
-    MkDocs (Material theme): mkdocs
-    pdoc: pdoc
-    None: None
-  default: mkdocs
+  type: bool
+  help: Do you want to set up documentation for your {{ project_type }} using MkDocs?
+  default: true
 
 project_name_kebab_case:
   when: false

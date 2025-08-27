@@ -1,0 +1,28 @@
+site_name: {{ project_name }}
+site_description: {{ project_description }}
+site_url: {{ project_url }}
+repo_url: {{ project_url }}
+repo_name: {{ project_url.split('/')[-2:] | join('/') }}
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+{%- if project_type == 'package' %}
+  - API Reference: reference/
+{%- endif %}
+
+plugins:
+  - search
+{%- if project_type == 'package' %}
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+{%- endif %}
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.highlight
