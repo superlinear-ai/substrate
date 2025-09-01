@@ -22,7 +22,7 @@ A modern [Copier template](https://github.com/copier-org/copier) for scaffolding
 - ♻️ Continuous integration with [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - 🧪 Test coverage with [Coverage.py](https://github.com/nedbat/coveragepy)
 - 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates)
-- 📚 Documentation with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) or [pdoc](https://pdoc.dev/)
+- 📚 Documentation with [MkDocs](https://github.com/mkdocs/mkdocs)
 
 ## ✨ Using
 
