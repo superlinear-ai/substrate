@@ -1,24 +1,3 @@
 # {{ project_name }}
 
 {{ project_description }}
-
-{%- if project_type == 'package' %}
-
-## Installation
-
-```bash
-pip install {{ project_name_kebab_case }}
-```
-
-## Quick Start
-
-```python
-import {{ project_name_snake_case }}
-
-# Your code here
-```
-
-## API Reference
-
-See the [API Reference](reference/index.md) for detailed documentation.
-{%- endif %}

@@ -36,13 +36,7 @@ source = "{{ project_url }}"
 changelog = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}blob/main/CHANGELOG.md"
 {%- endif %}
 releasenotes = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}releases"
-{%- if documentation_tool != 'None' %}
-{%- if ci == 'github' %}
-documentation = "https://{{ project_url.split('/')[-2] }}.github.io/{{ project_url.split('/')[-1] }}"
-{%- else %}
-documentation = "{{ project_url }}"
-{%- endif %}
-{%- endif %}
+docs = "{{ documentation_url }}"
 issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issues"
 
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
@@ -55,13 +49,9 @@ dev = [
   "ipython (>=8.18.0)",
   "ipywidgets (>=8.1.2)",
   "mypy (>=1.14.1)",
-  {%- if documentation_tool %}
   "mkdocs-material (>=9.5.21)",
   {%- if project_type == 'package' %}
   "mkdocstrings[python] (>=0.26.2)",
-  {%- endif %}
-  {%- endif %}
-  {%- if project_type == 'package' %}
   "poethepoet (>=0.32.1)",
   {%- endif %}
   "pre-commit (>=4.0.1)",

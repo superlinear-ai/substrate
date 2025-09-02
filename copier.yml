@@ -91,11 +91,6 @@ with_typer_cli:
   help: Does your {{ project_type }} need a Typer CLI?
   default: false
 
-documentation_tool:
-  type: bool
-  help: Do you want to set up documentation for your {{ project_type }} using MkDocs?
-  default: true
-
 project_name_kebab_case:
   when: false
   default: "{{ project_name | lower | replace(' ', '-') }}"
@@ -103,3 +98,8 @@ project_name_kebab_case:
 project_name_snake_case:
   when: false
   default: "{{ project_name | lower | replace(' ', '_') }}"
+
+documentation_url:
+  when: false
+  default: "{% if ci == 'github' %}https://{{ project_url.split('/')[-2] }}.github.io/{{ project_url.split('/')[-1] }}{% else %}{{ project_url }}{% endif %}"
+
