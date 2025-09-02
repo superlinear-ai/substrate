@@ -94,7 +94,7 @@ To migrate a project from Cookiecutter to Copier, follow these steps:
 
 ## 📚 Generate Docs
 
-If you are using GitHub as your repository host and choose one of the supported documentation frameworks, your docs will be published automatically to GitHub Pages. They will be available at `https://<username>.github.io/<repository>`.
+If you are using GitHub as your repository host, your docs will be published automatically to GitHub Pages, and will be available at `https://<username>.github.io/<repository>`.
 
 > [!TIP]
 > Ensure the source for GitHub Pages is set to "GitHub Actions" in your repository settings under **Settings** → **Pages**. For more details, see [Configuring a publishing source for your GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
