@@ -29,10 +29,10 @@ jobs:
       - name: Build docs
         run: uv run mkdocs build
       
-      - name: Setup Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         
-      - name: Upload artifact
+      - name: Upload GitHub Pages artifact 
         uses: actions/upload-pages-artifact@v3
         with:
           path: site

@@ -155,6 +155,23 @@ convention = "numpy"
 type = "simple"
 
 [tool.poe.tasks]
+
+  [tool.poe.tasks.docs]
+  help = "Build or serve the documentation"
+  shell = """
+    if [ $serve ]
+    then {
+      mkdocs build && mkdocs serve
+    } else {
+      mkdocs build
+    } fi
+    """
+
+    [[tool.poe.tasks.docs.args]]
+    help = "Serve the documentation locally with live reload"
+    type = "boolean"
+    name = "serve"
+    options = ["--serve"]
 {%- if with_fastapi_api %}
 
   [tool.poe.tasks.serve]
