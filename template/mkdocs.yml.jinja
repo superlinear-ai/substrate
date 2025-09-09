@@ -3,6 +3,16 @@ site_description: {{ project_description }}
 site_url: {{ documentation_url }}
 repo_url: {{ project_url }}
 repo_name: {{ project_url.split('/')[-2:] | join('/') }}
+{%- if typing == 'strict' %}
+
+strict: true
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+{%- endif %}
 
 theme:
   name: material
