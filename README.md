@@ -92,9 +92,9 @@ To migrate a project from Cookiecutter to Copier, follow these steps:
 
 5. Create a PR from your branch, review it, and merge it!
 
-### Generate and publish your Python project's docs
+### Build and publish your Python project's docs
 
-To generate and serve your Python project's docs, run:
+To build and serve your Python project's docs, run:
 
 ```sh
 poe docs --serve
