@@ -36,7 +36,7 @@ source = "{{ project_url }}"
 changelog = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}blob/main/CHANGELOG.md"
 {%- endif %}
 releasenotes = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}releases"
-docs = "{{ documentation_url }}"
+documentation = "{{ documentation_url }}"
 issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issues"
 
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
