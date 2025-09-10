@@ -55,6 +55,19 @@ cz bump
 git push origin main --tags
 ```
 
+### Build and publish your Python project's docs
+
+To build and serve your Python project's docs, run:
+
+```sh
+poe docs --serve
+```
+
+If your project is on GitHub, your docs will be published automatically to GitHub Pages every time you update the default branch. You can view the docs by clicking on the ![Documentation](https://img.shields.io/static/v1?label=Documentation&message=View&color=blue&logo=readme&logoColor=white) badge in your project's README.
+
+> [!TIP]
+> Make sure to [configure the source of your project's GitHub Pages as GitHub Actions in your project settings](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) to allow the GitHub Actions workflow to publish your docs.
+
 ## 🍪 Migrating from Cookiecutter
 
 > [!IMPORTANT]
@@ -91,19 +104,6 @@ To migrate a project from Cookiecutter to Copier, follow these steps:
     ```
 
 5. Create a PR from your branch, review it, and merge it!
-
-### Build and publish your Python project's docs
-
-To build and serve your Python project's docs, run:
-
-```sh
-poe docs --serve
-```
-
-If your project is on GitHub, your docs will be published automatically to GitHub Pages every time you update the default branch. You can view the docs by clicking on the ![Documentation](https://img.shields.io/static/v1?label=Documentation&message=View&color=blue&logo=readme&logoColor=white)] badge in your project's README.
-
-> [!TIP]
-> Make sure to [configure the source of your project's GitHub Pages as GitHub Actions in your project settings](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) to allow the GitHub Actions workflow to publish your docs.
 
 ## Contributing
 
