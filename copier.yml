@@ -98,3 +98,8 @@ project_name_kebab_case:
 project_name_snake_case:
   when: false
   default: "{{ project_name | lower | replace(' ', '_') }}"
+
+documentation_url:
+  when: false
+  default: "{% if ci == 'github' %}https://{{ project_url.rstrip('/').split('/')[-2] }}.github.io/{{ project_url.rstrip('/').split('/')[-1] }}{% else %}{{ project_url }}{% endif %}"
+

@@ -36,7 +36,7 @@ source = "{{ project_url }}"
 changelog = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}blob/main/CHANGELOG.md"
 {%- endif %}
 releasenotes = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}releases"
-documentation = "{{ project_url }}"
+documentation = "{{ documentation_url }}"
 issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issues"
 
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
@@ -49,8 +49,9 @@ dev = [
   "ipython (>=8.18.0)",
   "ipywidgets (>=8.1.2)",
   "mypy (>=1.14.1)",
-  "pdoc (>=15.0.1)",
+  "mkdocs-material (>=9.5.21)",
   {%- if project_type == 'package' %}
+  "mkdocstrings[python] (>=0.26.2)",
   "poethepoet (>=0.32.1)",
   {%- endif %}
   "pre-commit (>=4.0.1)",
@@ -162,6 +163,23 @@ convention = "numpy"
 type = "simple"
 
 [tool.poe.tasks]
+
+  [tool.poe.tasks.docs]
+  help = "Build or serve the documentation"
+  shell = """
+    if [ $serve ]
+    then {
+      mkdocs serve
+    } else {
+      mkdocs build
+    } fi
+    """
+
+    [[tool.poe.tasks.docs.args]]
+    help = "Serve the documentation locally with live reload"
+    type = "boolean"
+    name = "serve"
+    options = ["--serve"]
 {%- if with_fastapi_api %}
 
   [tool.poe.tasks.serve]
@@ -214,27 +232,6 @@ type = "simple"
     [[tool.poe.tasks.serve.sequence]]
     cmd = "echo 'Serving app (placeholder)...'"
 {%- endif %}
-
-  [tool.poe.tasks.docs]
-  help = "Generate this {{ project_type }}'s docs"
-  cmd = """
-    pdoc
-      --docformat $docformat
-      --output-directory $outputdirectory
-      {{ project_name_snake_case }}
-    """
-
-    [[tool.poe.tasks.docs.args]]
-    help = "The docstring style (default: numpy)"
-    name = "docformat"
-    options = ["--docformat"]
-    default = "numpy"
-
-    [[tool.poe.tasks.docs.args]]
-    help = "The output directory (default: docs)"
-    name = "outputdirectory"
-    options = ["--output-directory"]
-    default = "docs"
 
   [tool.poe.tasks.lint]
   help = "Lint this {{ project_type }}"
