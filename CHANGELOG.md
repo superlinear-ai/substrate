@@ -1,3 +1,16 @@
+## v1.6.0 (2025-09-10)
+
+### Feat
+
+- replace pdoc with MkDocs (#316)
+- check if PR title conforms to Conventional Commits (#312)
+- select ALL ruff rules (#311)
+- upgrade CI dependencies (#310)
+
+### Fix
+
+- select user-defined minimum Python version in CI test matrix (#317)
+
 ## v1.5.1 (2025-03-13)
 
 ### Fix
