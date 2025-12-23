@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  test-copier:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,16 +17,16 @@ jobs:
         project-type: ["app", "package"]
         typing: ["optional", "strict"]
 
-    name: "Copier: Python ${{ matrix.python-version }} ${{ matrix.project-type }} with ${{ matrix.typing }} typing"
+    name: "Python ${{ matrix.python-version }} ${{ matrix.project-type }} with ${{ matrix.typing }} typing"
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: substrate
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
           cache-dependency-glob: "**/uv.lock"
@@ -57,53 +57,6 @@ jobs:
           subFolder: ./my-project/
           runCmd: |
             uv lock
-            poe lint
-            poe test
-
-      - name: Build app Docker image
-        if: ${{ matrix.project-type == 'app' }}
-        uses: docker/build-push-action@v6
-        with:
-          context: ./my-project/
-          target: app
-
-  test-cookiecutter:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        python-version: ["3.10", "3.13"]
-        project-type: ["app", "package"]
-
-    name: "Cookiecutter: Python ${{ matrix.python-version }} ${{ matrix.project-type }}"
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: poetry-cookiecutter
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          cache-dependency-glob: "**/uv.lock"
-
-      - name: Scaffold Python project
-        run: |
-          uvx cruft create --no-input --extra-context '{"project_type": "${{ matrix.project-type }}", "project_name": "My Project", "python_version": "3.10", "__docker_image":"superlinear/python-gpu:$PYTHON_VERSION-cuda11.8", "with_fastapi_api": "1", "with_typer_cli": "1"}' ./poetry-cookiecutter/
-          cd my-project
-          git config --global init.defaultBranch main
-          git init
-          git checkout -b test
-          git add .
-
-      - name: Lint and test project
-        uses: devcontainers/ci@v0.3
-        with:
-          subFolder: ./my-project/
-          runCmd: |
             poe lint
             poe test
 

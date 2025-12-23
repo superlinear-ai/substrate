@@ -68,43 +68,6 @@ If your project is on GitHub, your docs will be published automatically to GitHu
 > [!TIP]
 > Make sure to [configure the source of your project's GitHub Pages as GitHub Actions in your project settings](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow) to allow the GitHub Actions workflow to publish your docs.
 
-## 🍪 Migrating from Cookiecutter
-
-> [!IMPORTANT]
-> This project was formerly known as `Poetry Cookiecutter` and was based on [Poetry](https://github.com/python-poetry/poetry) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter). We will continue to support the original Cookiecutter-based template side by side with the new Copier-based template. However, we do encourage users to upgrade to the new Copier-based template by following the instructions below.
-
-To migrate a project from Cookiecutter to Copier, follow these steps:
-
-1. In your project repository, run:
-
-    ```sh
-    # Create a new branch
-    git checkout -b rescaffold
-
-    # Remove unnecessary files
-    rm -f .cruft.json poetry.lock
-    
-    # Rescaffold the project without changing src/ and tests/
-    uvx copier copy --overwrite --exclude src/ --exclude tests/ gh:superlinear-ai/substrate .
-    ```
-
-2. Review the changes to `pyproject.toml` and reinsert your project's dependencies.
-3. Review the changes to `README.md` and reinsert your project's documentation.
-4. Commit and push all changes with:
-
-    ```sh
-    # Stage all changes
-    git add .
-
-    # Commit the staged changes
-    git commit -m "build: upgrade scaffolding"
-
-    # Push the committed changes
-    git push origin rescaffold
-    ```
-
-5. Create a PR from your branch, review it, and merge it!
-
 ## Contributing
 
 <details>
@@ -150,8 +113,8 @@ The following development environments are supported:
     pre-commit install --install-hooks
     ```
 
-3. _VS Code Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
-4. _PyCharm Dev Container_: clone this repository, open it with PyCharm, [create a Dev Container with Mount Sources](https://www.jetbrains.com/help/pycharm/start-dev-container-inside-ide.html), and [configure an existing Python interpreter](https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html#widget) at `/opt/venv/bin/python`.
+4. _VS Code Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
+5. _PyCharm Dev Container_: clone this repository, open it with PyCharm, [create a Dev Container with Mount Sources](https://www.jetbrains.com/help/pycharm/start-dev-container-inside-ide.html), and [configure an existing Python interpreter](https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html#widget) at `/opt/venv/bin/python`.
 
 </details>
 
