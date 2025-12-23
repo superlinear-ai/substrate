@@ -4,7 +4,9 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         "ghcr.io/devcontainers-extra/features/devcontainers-cli:1": {},
-        "ghcr.io/devcontainers-extra/features/starship:1": {}
+        "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+            "packages": "starship"
+        }
     },
     "remoteEnv": {
         "VIRTUAL_ENV": "/opt/venv",

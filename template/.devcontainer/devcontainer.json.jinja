@@ -7,7 +7,9 @@
         {%- if project_type == 'app' %}
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         {%- endif %}
-        "ghcr.io/devcontainers-extra/features/starship:1": {}
+        "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+            "packages": "starship"
+        }
     },
     "overrideCommand": true,
     "remoteUser": "user",
