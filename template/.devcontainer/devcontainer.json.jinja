@@ -27,7 +27,6 @@
             "extensions": [
                 "astral-sh.ty",
                 "charliermarsh.ruff",
-                "GitHub.copilot",
                 "GitHub.copilot-chat",
                 {%- if ci == 'github' %}
                 "GitHub.vscode-github-actions",
@@ -38,14 +37,11 @@
                 "ms-azuretools.vscode-docker",
                 "ms-python.python",
                 "ms-toolsai.jupyter",
-                "ryanluker.vscode-coverage-gutters",
-                "tamasfe.even-better-toml",
-                "visualstudioexptteam.vscodeintellicode"
+                "tamasfe.even-better-toml"
             ],
             "settings": {
-                "coverage-gutters.coverageFileNames": [
-                    "reports/coverage.xml"
-                ],
+                "chat.extensionUnification.enabled": true,
+                "editor.bracketPairColorization.enabled": true,
                 "editor.codeActionsOnSave": {
                     "source.fixAll": "explicit",
                     "source.organizeImports": "explicit"
@@ -61,10 +57,7 @@
                     100
                 ],
                 "files.autoSave": "onFocusChange",
-                "github.copilot.chat.agent.enabled": true,
                 "github.copilot.chat.codesearch.enabled": true,
-                "github.copilot.chat.edits.enabled": true,
-                "github.copilot.nextEditSuggestions.enabled": true,
                 "jupyter.kernels.excludePythonEnvironments": [
                     "/usr/local/bin/python"
                 ],
@@ -77,7 +70,6 @@
                 "python.languageServer": "None",
                 "python.terminal.activateEnvironment": false,
                 "python.testing.pytestEnabled": true,
-                "ruff.importStrategy": "fromEnvironment",
                 "terminal.integrated.env.linux": {
                     "GIT_EDITOR": "code --wait"
                 },

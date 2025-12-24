@@ -20,19 +20,27 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "astral-sh.ty",
                 "charliermarsh.ruff",
                 "DavidAnson.vscode-markdownlint",
-                "GitHub.copilot",
                 "GitHub.copilot-chat",
                 "GitHub.vscode-github-actions",
                 "GitHub.vscode-pull-request-github",
                 "ms-azuretools.vscode-docker",
                 "ms-python.python",
-                "tamasfe.even-better-toml",
-                "visualstudioexptteam.vscodeintellicode"
+                "tamasfe.even-better-toml"
             ],
             "settings": {
+                "chat.extensionUnification.enabled": true,
+                "editor.bracketPairColorization.enabled": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": "explicit",
+                    "source.organizeImports": "explicit"
+                },
                 "editor.formatOnSave": true,
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                },
                 "[toml]": {
                     "editor.formatOnSave": false
                 },
@@ -40,12 +48,19 @@
                     100
                 ],
                 "files.autoSave": "onFocusChange",
-                "github.copilot.chat.agent.enabled": true,
                 "github.copilot.chat.codesearch.enabled": true,
-                "github.copilot.chat.edits.enabled": true,
-                "github.copilot.nextEditSuggestions.enabled": true,
+                "jupyter.kernels.excludePythonEnvironments": [
+                    "/usr/local/bin/python"
+                ],
+                "notebook.codeActionsOnSave": {
+                    "notebook.source.fixAll": "explicit",
+                    "notebook.source.organizeImports": "explicit"
+                },
+                "notebook.formatOnSave.enabled": true,
                 "python.defaultInterpreterPath": "/opt/venv/bin/python",
+                "python.languageServer": "None",
                 "python.terminal.activateEnvironment": false,
+                "python.testing.pytestEnabled": true,
                 "terminal.integrated.env.linux": {
                     "GIT_EDITOR": "code --wait"
                 },
