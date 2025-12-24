@@ -1,6 +1,6 @@
-[build-system]  # https://docs.astral.sh/uv/concepts/projects/config/#build-systems
-requires = ["hatchling>=1.27.0"]
-build-backend = "hatchling.build"
+[build-system]  # https://docs.astral.sh/uv/concepts/build-backend/
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
 
 [project]  # https://packaging.python.org/en/latest/specifications/pyproject-toml/
 name = "{{ project_name_kebab_case }}"
