@@ -77,8 +77,9 @@ repos:
         require_serial: true
         language: system
         types_or: [python, pyi]
-      - id: mypy
-        name: mypy
-        entry: mypy
+      - id: ty
+        name: ty
+        entry: ty check
+        require_serial: true
         language: system
-        types: [python]
+        types_or: [python, pyi]
