@@ -41,6 +41,7 @@ issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issu
 
 [dependency-groups]  # https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies
 dev = [
+  "codespell (>=2.4.1)",
   {%- if with_conventional_commits %}
   "commitizen (>=4.3.0)",
   {%- endif %}
@@ -63,6 +64,11 @@ dev = [
   "typeguard (>=4.4.1)",
   {%- endif %}
 ]
+
+[tool.codespell]  # https://github.com/codespell-project/codespell
+builtin = "en-GB_to_en-US,clear,code,rare"
+check-filenames = true
+skip = "./*_cache/,./.venv,./reports"
 {%- if with_conventional_commits %}
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
