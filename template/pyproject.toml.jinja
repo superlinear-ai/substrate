@@ -48,7 +48,6 @@ dev = [
   "ipykernel (>=6.29.4)",
   "ipython (>=8.18.0)",
   "ipywidgets (>=8.1.2)",
-  "mypy (>=1.14.1)",
   "mkdocs-material (>=9.5.21)",
   {%- if project_type == 'package' %}
   "mkdocstrings[python] (>=0.26.2)",
@@ -59,6 +58,7 @@ dev = [
   "pytest-mock (>=3.14.0)",
   "pytest-xdist (>=3.6.1)",
   "ruff (>=0.9.2)",
+  "ty (>=0.0.5)",
   {%- if typing == 'strict' %}
   "typeguard (>=4.4.1)",
   {%- endif %}
@@ -88,31 +88,6 @@ source = ["src"]
 
 [tool.coverage.xml]  # https://coverage.readthedocs.io/en/latest/config.html#xml
 output = "reports/coverage.xml"
-
-[tool.mypy]  # https://mypy.readthedocs.io/en/latest/config_file.html
-junit_xml = "reports/mypy.xml"
-{%- if with_fastapi_api %}
-plugins = "pydantic.mypy"
-{%- endif %}
-{%- if typing == 'strict' %}
-strict = true
-disallow_subclassing_any = false
-disallow_untyped_decorators = false
-{%- endif %}
-ignore_missing_imports = true
-pretty = true
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-warn_unreachable = true
-{%- if typing == 'strict' and with_fastapi_api %}
-
-[tool.pydantic-mypy]  # https://docs.pydantic.dev/latest/integrations/mypy/#configuring-the-plugin
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-warn_untyped_fields = true
-{%- endif %}
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
 addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if typing == 'strict' %} --strict-config --strict-markers{% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
@@ -158,6 +133,19 @@ max-doc-length = 100
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+{%- if project_type == 'package' %}
+
+[tool.ty.environment]
+python-platform = "all"
+{%- endif %}
+
+[tool.ty.rules]
+unused-ignore-comment = "warn"
+{%- if typing == 'strict' %}
+
+[tool.ty.terminal]
+error-on-warning = true
+{%- endif %}
 
 [tool.poe.executor]  # https://github.com/nat-n/poethepoet
 type = "simple"

@@ -14,14 +14,14 @@ A modern [Copier template](https://github.com/copier-org/copier) for scaffolding
 - 📦 Packaging and dependency management with [uv](https://github.com/astral-sh/uv)
 - 🚚 Installing from and publishing to [PyPI](https://pypi.org/)
 - ⚡️ Task running with [Poe the Poet](https://github.com/nat-n/poethepoet)
-- 💅 Code formatting with [Ruff](https://github.com/charliermarsh/ruff)
-- ✅ Code linting with [Pre-commit](https://pre-commit.com/), [Mypy](https://github.com/python/mypy), and [Ruff](https://github.com/charliermarsh/ruff)
+- 💅 Code formatting with [ruff](https://github.com/astral-sh/ruff)
+- ✅ Code linting with [pre-commit](https://pre-commit.com/), [ruff](https://github.com/astral-sh/ruff), and [ty](https://github.com/astral-sh/ty)
 - 🏷 Optionally follow the [Conventional Commits](https://www.conventionalcommits.org/) standard
 - 🚦 Release new versions with [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) using [Commitizen](https://github.com/commitizen-tools)
 - 💌 Verified commits with [GPG](https://gnupg.org/)
 - ♻️ Continuous integration with [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - 🧪 Test coverage with [Coverage.py](https://github.com/nedbat/coveragepy)
-- 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates)
+- 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
 - 📚 Documentation with [MkDocs](https://github.com/mkdocs/mkdocs)
 
 ## ✨ Using

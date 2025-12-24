@@ -25,6 +25,7 @@
         },
         "vscode": {
             "extensions": [
+                "astral-sh.ty",
                 "charliermarsh.ruff",
                 "GitHub.copilot",
                 "GitHub.copilot-chat",
@@ -35,7 +36,6 @@
                 "GitLab.gitlab-workflow",
                 {%- endif %}
                 "ms-azuretools.vscode-docker",
-                "ms-python.mypy-type-checker",
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "ryanluker.vscode-coverage-gutters",
@@ -68,20 +68,16 @@
                 "jupyter.kernels.excludePythonEnvironments": [
                     "/usr/local/bin/python"
                 ],
-                "mypy-type-checker.importStrategy": "fromEnvironment",
-                "mypy-type-checker.preferDaemon": true,
                 "notebook.codeActionsOnSave": {
                     "notebook.source.fixAll": "explicit",
                     "notebook.source.organizeImports": "explicit"
                 },
                 "notebook.formatOnSave.enabled": true,
                 "python.defaultInterpreterPath": "/opt/venv/bin/python",
+                "python.languageServer": "None",
                 "python.terminal.activateEnvironment": false,
                 "python.testing.pytestEnabled": true,
                 "ruff.importStrategy": "fromEnvironment",
-                {%- if typing == 'strict' %}
-                "ruff.logLevel": "warning",
-                {%- endif %}
                 "terminal.integrated.env.linux": {
                     "GIT_EDITOR": "code --wait"
                 },
