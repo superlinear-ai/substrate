@@ -18,7 +18,7 @@ for project_type in "${project_types[@]}"; do
             --data project_url="https://github.com/user/repo" \
             --data author_name="John Smith" \
             --data author_email="john@example.com" \
-            --data python_version="3.10" \
+            --data python_version="3.12" \
             --data typing="$typing" \
             --data with_fastapi_api=true \
             --data with_typer_cli="$([ "$project_type" == "app" ] && echo false || echo true)"
