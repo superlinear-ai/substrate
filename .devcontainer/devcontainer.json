@@ -1,6 +1,6 @@
 {
     "name": "substrate",
-    "image": "ghcr.io/astral-sh/uv:python3.12-trixie",
+    "image": "ghcr.io/astral-sh/uv:python3.13-trixie",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "moby": false
