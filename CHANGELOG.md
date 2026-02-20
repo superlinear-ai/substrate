@@ -1,3 +1,19 @@
+## v2.0.0 (2026-02-20)
+
+### Feat
+
+- change license to MIT (#326)
+- add codespell linter (#325)
+- replace build backend with uv_build (#324)
+- recommend Python 3.12 (#323)
+- minify VS Code extensions (#322)
+- replace mypy with ty (#321)
+- deprecate cookiecutter (#320)
+
+### Fix
+
+- fix missing py.typed (#319)
+
 ## v1.6.0 (2025-09-10)
 
 ### Feat
