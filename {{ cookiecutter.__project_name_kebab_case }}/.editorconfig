@@ -10,8 +10,9 @@ trim_trailing_whitespace = true
 [*.py]
 indent_style = space
 indent_size = 4
+max_line_length = 99
 
-[*.{yml,yaml,json,toml}]
+[*.{yml,yaml,json,toml,css,html,js,jsx,ts,tsx}]
 indent_style = space
 indent_size = 2
 
@@ -20,3 +21,9 @@ indent_style = tab
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.sh]
+end_of_line = lf
+
+[*.bat]
+end_of_line = crlf
