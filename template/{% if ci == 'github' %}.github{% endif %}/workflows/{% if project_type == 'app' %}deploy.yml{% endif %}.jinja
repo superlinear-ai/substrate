@@ -43,8 +43,19 @@ jobs:
 
       - name: Deploy to Cloud Run
         if: {% raw %}${{ github.event_name == 'push' }}{% endraw %}
+        id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: {% raw %}${{ secrets.CLOUD_RUN_SERVICE }}{% endraw %}
           region: {% raw %}${{ secrets.CLOUD_RUN_REGION }}{% endraw %}
           image: {% raw %}${{ env.IMAGE }}{% endraw %}
+
+      - name: Verify deployment
+        if: {% raw %}${{ github.event_name == 'push' }}{% endraw %}
+        run: |
+          curl \
+            --fail \
+            --max-time 10 \
+            --retry 5 \
+            --retry-delay 3 \
+            "{% raw %}${{ steps.deploy.outputs.url }}{% endraw %}/health"
