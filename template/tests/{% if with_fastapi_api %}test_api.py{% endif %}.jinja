@@ -8,6 +8,13 @@ from {{ project_name_snake_case }}.api import app
 client = TestClient(app)
 
 
+def test_health() -> None:
+    """Test that the health check endpoint returns ok."""
+    response = client.get("/health")
+    assert httpx.codes.is_success(response.status_code)
+    assert response.json() == {"status": "ok"}
+
+
 def test_read_root() -> None:
     """Test that reading the root is successful."""
     response = client.get("/compute", params={"n": 7})
