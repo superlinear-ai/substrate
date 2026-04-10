@@ -2,23 +2,51 @@
 
 import asyncio
 import logging
+import os
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     """Handle FastAPI startup and shutdown events."""
-    # Startup events.
     for handler in logging.root.handlers:
         logging.root.removeHandler(handler)
+    tracer_provider: TracerProvider | None = None
+    if api_key := os.getenv("HONEYCOMB_API_KEY"):
+        tracer_provider = TracerProvider(
+            resource=Resource({"service.name": "{{ project_name_kebab_case }}"}),
+        )
+        tracer_provider.add_span_processor(
+            BatchSpanProcessor(
+                OTLPSpanExporter(
+                    endpoint="https://api.honeycomb.io/v1/traces",
+                    headers={"x-honeycomb-team": api_key},
+                ),
+            ),
+        )
+        trace.set_tracer_provider(tracer_provider)
+        FastAPIInstrumentor.instrument_app(app)
     yield
-    # Shutdown events.
+    if tracer_provider is not None:
+        tracer_provider.shutdown()
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+@app.get("/health")
+async def health() -> dict[str, str]:
+    """Return service health status."""
+    return {"status": "ok"}
 
 
 @app.get("/compute")
