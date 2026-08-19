@@ -46,6 +46,9 @@ dev = [
   "commitizen>=4.17.1",
   {%- endif %}
   "coverage[toml]>=7.15.4",
+  {%- if with_fastapi_api %}
+  "httpx2>=2.12.0",
+  {%- endif %}
   "ipykernel>=7.3.0",
   "ipython>=9.16.1",
   "ipywidgets>=8.1.9",
