@@ -181,28 +181,35 @@ type = "simple"
 
   [tool.poe.tasks.serve]
   help = "Serve the REST API"
-  shell = """
-    if [ $dev ]
-    then {
-      uvicorn \
-        --host $host \
-        --port $port \
-        --reload \
+  control.expr = "dev"
+
+    [[tool.poe.tasks.serve.switch]]
+    case = "True"
+    cmd = """
+      uvicorn
+        --host $host
+        --port $port
+        --reload
         {{ project_name_snake_case }}.api:app
-    } else {
-      gunicorn \
-        --access-logfile - \
-        --bind $host:$port \
-        --graceful-timeout 10 \
-        --keep-alive 10 \
-        --log-file - \
-        --timeout 30 \
-        --worker-class uvicorn.workers.UvicornWorker \
-        --worker-tmp-dir /dev/shm \
-        --workers 2 \
+      """
+    use_exec = true
+
+    [[tool.poe.tasks.serve.switch]]
+    case = "False"
+    cmd = """
+      gunicorn
+        --access-logfile -
+        --bind $host:$port
+        --graceful-timeout 10
+        --keep-alive 10
+        --log-file -
+        --timeout 30
+        --worker-class uvicorn.workers.UvicornWorker
+        --worker-tmp-dir /dev/shm
+        --workers 2
         {{ project_name_snake_case }}.api:app
-    } fi
-    """
+      """
+    use_exec = true
 
     [[tool.poe.tasks.serve.args]]
     help = "Bind socket to this host (default: 0.0.0.0)"
