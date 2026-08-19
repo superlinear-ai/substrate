@@ -1,3 +1,18 @@
+## v2.1.0 (2026-08-19)
+
+### Feat
+
+- minimize devcontainer.json extensions and settings (#342)
+- upgrade {root, template} x {project, CI} dependencies (#340)
+
+### Fix
+
+- use exec to propagate signals to API servers (#343)
+
+### Perf
+
+- avoid redundant setup on Dev Container restarts (#341)
+
 ## v2.0.0 (2026-02-20)
 
 ### Feat
