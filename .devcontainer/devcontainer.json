@@ -16,7 +16,8 @@
         "UV_PROJECT_ENVIRONMENT": "/opt/venv"
     },
     "onCreateCommand": "echo 'eval \"$(starship init bash)\"' >> ~/.bashrc",
-    "postCreateCommand": "uv sync && pre-commit install --install-hooks",
+    "updateContentCommand": "uv sync",
+    "postCreateCommand": "pre-commit install --install-hooks",
     "customizations": {
         "vscode": {
             "extensions": [
