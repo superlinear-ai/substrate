@@ -15,7 +15,9 @@
     },
     "overrideCommand": true,
     "remoteUser": "user",
-    "postStartCommand": "sudo chown -R user:user /opt/ && uv sync --python ${localEnv:PYTHON_VERSION:{{ python_version }}} {% if project_type == 'package' %}--resolution ${localEnv:RESOLUTION_STRATEGY:highest} {% endif %}--all-extras && pre-commit install --install-hooks",
+    "onCreateCommand": "sudo chown -R user:user /opt/",
+    "updateContentCommand": "uv sync --python ${localEnv:PYTHON_VERSION:{{ python_version }}} {% if project_type == 'package' %}--resolution ${localEnv:RESOLUTION_STRATEGY:highest} {% endif %}--all-extras",
+    "postCreateCommand": "pre-commit install --install-hooks",
     "customizations": {
         "jetbrains": {
             "backend": "PyCharm",
