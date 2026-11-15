@@ -15,5 +15,7 @@ jobs:
         uses: astral-sh/setup-uv@v10.0.1
 
       - name: Check PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          uvx --from=commitizen cz check --message "${{ github.event.pull_request.title }}"
+          uvx --from=commitizen cz check --message "$PR_TITLE"
