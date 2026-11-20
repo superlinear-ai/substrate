@@ -1,0 +1,15 @@
+# https://snakemake.readthedocs.io
+# Run the whole workflow with `poe workflow`, and render its DAG with `poe dag`.
+
+
+rule all:
+    input:
+        "results/figures/example.png",
+
+
+rule example_figure:
+    """Simulate, fit, and plot an exponential decay (replace this with your own analysis step)."""
+    output:
+        "results/figures/example.png",
+    shell:
+        "python -m {{ project_name_snake_case }}.example {output}"

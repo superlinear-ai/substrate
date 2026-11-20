@@ -1,0 +1,38 @@
+# ---
+# jupyter:
+#   jupytext:
+#     formats: ipynb,py:percent
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#   kernelspec:
+#     display_name: Python 3
+#     language: python
+#     name: python3
+# ---
+
+# %% [markdown]
+# # Exploration
+#
+# This notebook is paired with `01_exploration.ipynb` by Jupytext. Git tracks this `.py` file;
+# the `.ipynb` is git-ignored. Run `poe notebooks` to sync the pair after editing either one.
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+import polars as pl
+
+from {{ project_name_snake_case }}.paths import RAW_DATA
+from {{ project_name_snake_case }}.plotting import use_style
+
+use_style()
+
+# %%
+# Replace this with your data, for example: pl.read_csv(RAW_DATA / "measurements.csv")
+print(f"Raw data lives in {RAW_DATA}")
+data = pl.DataFrame({"x": np.linspace(0, 1, 20)}).with_columns(y=pl.col("x") ** 2)
+
+# %%
+fig, ax = plt.subplots()
+ax.plot(data["x"], data["y"])
+ax.set(xlabel="x", ylabel="y")

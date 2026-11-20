@@ -17,7 +17,7 @@
     },
     "onCreateCommand": "echo 'eval \"$(starship init bash)\"' >> ~/.bashrc",
     "updateContentCommand": "uv sync",
-    "postCreateCommand": "pre-commit install --install-hooks",
+    "postCreateCommand": "prek install --install-hooks",
     "customizations": {
         "vscode": {
             "extensions": [

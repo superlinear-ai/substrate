@@ -1,17 +1,9 @@
 _subdirectory: template
 
-project_type:
-  type: str
-  help: Is this project a package or an app?
-  choices:
-    - app
-    - package
-  default: package
-
 project_name:
   type: str
-  help: What is your {{ project_type }}'s name?
-  placeholder: "{% if project_type == 'app' %}My App{% else %}My Package{% endif %}"
+  help: What is your analysis project's name?
+  placeholder: My Analysis
   validator: >-
     {% if not project_name.strip() %}
     Invalid project name
@@ -19,8 +11,8 @@ project_name:
 
 project_description:
   type: str
-  help: What does your {{ project_type }} do in one sentence?
-  placeholder: A Python {{ project_type }} that reticulates splines.
+  help: What does your analysis investigate, in one sentence?
+  placeholder: Analysis of spectral data from the XYZ experiment.
   validator: >-
     {% if not project_description.strip() %}
     Invalid project description
@@ -29,7 +21,7 @@ project_description:
 project_url:
   type: str
   help: What is the URL of your project's repository?
-  placeholder: https://github.com/user/{{ project_type }}
+  placeholder: https://github.com/user/my-analysis
   validator: >-
     {% if not project_url.startswith("https://") %}
     Invalid project URL
@@ -37,17 +29,17 @@ project_url:
 
 author_name:
   type: str
-  help: What is the name of your {{ project_type }}'s primary author?
-  placeholder: John Smith
+  help: What is the name of your project's primary author? (e.g. "Jane Smith")
+  placeholder: Jane Smith
   validator: >-
-    {% if not author_name %}
+    {% if not author_name.strip() %}
     Invalid author name
     {% endif %}
 
 author_email:
   type: str
-  help: What is the email address of your {{ project_type }}'s primary author?
-  placeholder: john@example.com
+  help: What is the email address of your project's primary author?
+  placeholder: jane@example.com
   validator: >-
     {% if not "@" in author_email %}
     Invalid author email address
@@ -55,8 +47,8 @@ author_email:
 
 python_version:
   type: str
-  help: "{% if project_type == 'app' %}Which Python version should your app use?{% else %}What is the minimum Python version your package should support?{% endif %}"
-  default: "{% if project_type == 'app' %}3.13{% else %}3.12{% endif %}"
+  help: Which Python version should your project use?
+  default: "3.12"
 
 ci:
   type: str
@@ -80,16 +72,42 @@ with_conventional_commits:
   help: Do you want to follow the Conventional Commits standard (https://www.conventionalcommits.org) for your commit messages?
   default: true
 
-with_fastapi_api:
+with_jupytext:
   type: bool
-  help: Does your app need a FastAPI API?
-  default: false
-  when: "{{ project_type == 'app' }}"
+  help: Do you want to pair notebooks with plain-text .py files using Jupytext, so that git tracks the .py files instead of .ipynb files?
+  default: true
 
-with_typer_cli:
+with_dvc:
   type: bool
-  help: Does your {{ project_type }} need a Typer CLI?
+  help: Do you want to version large data files with DVC (https://dvc.org)?
   default: false
+
+with_snakemake:
+  type: bool
+  help: Do you want to define a reproducible analysis workflow with Snakemake (https://snakemake.github.io)?
+  default: false
+
+with_citation:
+  type: bool
+  help: Do you want paper and citation metadata (CITATION.cff and a data provenance and dictionary template)?
+  default: false
+
+citation_license:
+  type: str
+  help: Which SPDX licence identifier should CITATION.cff declare? (You still need to add the licence text file yourself.)
+  choices:
+    - MIT
+    - Apache-2.0
+    - BSD-3-Clause
+    - CC-BY-4.0
+  default: MIT
+  when: "{{ with_citation }}"
+
+author_orcid:
+  type: str
+  help: "What is the author's ORCID iD URL? (optional, e.g. https://orcid.org/0000-0000-0000-0000)"
+  default: ""
+  when: "{{ with_citation }}"
 
 project_name_kebab_case:
   when: false
@@ -97,7 +115,15 @@ project_name_kebab_case:
 
 project_name_snake_case:
   when: false
-  default: "{{ project_name | lower | replace(' ', '_') }}"
+  default: "{{ project_name | lower | replace(' ', '_') | replace('-', '_') }}"
+
+author_given_names:
+  when: false
+  default: "{{ author_name.strip().split()[:-1] | join(' ') }}"
+
+author_family_names:
+  when: false
+  default: "{{ author_name.strip().split()[-1] }}"
 
 documentation_url:
   when: false

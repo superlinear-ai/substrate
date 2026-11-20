@@ -1,0 +1,14 @@
+"""Canonical locations of this project's files, independent of the working directory."""
+
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+DATA = PROJECT_ROOT / "data"
+RAW_DATA = DATA / "raw"
+INTERIM_DATA = DATA / "interim"
+PROCESSED_DATA = DATA / "processed"
+
+RESULTS = PROJECT_ROOT / "results"
+FIGURES = RESULTS / "figures"
+TABLES = RESULTS / "tables"

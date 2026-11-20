@@ -13,11 +13,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
-        project-type: ["app", "package"]
+        python-version: ["3.12", "3.13", "3.14"]
+        extras: ["none", "all"]
         typing: ["optional", "strict"]
 
-    name: "Python ${{ matrix.python-version }} ${{ matrix.project-type }} with ${{ matrix.typing }} typing"
+    name: "Python ${{ matrix.python-version }} extras=${{ matrix.extras }} with ${{ matrix.typing }} typing"
 
     steps:
       - name: Checkout
@@ -33,18 +33,8 @@ jobs:
 
       - name: Scaffold Python project
         run: |
-          uvx copier copy --vcs-ref=HEAD substrate my-project \
-            --defaults \
-            --data project_type="${{ matrix.project-type }}" \
-            --data project_name="My Project" \
-            --data project_description="A Python ${{ matrix.project-type }} that reticulates splines." \
-            --data project_url="https://github.com/user/repo" \
-            --data author_name="John Smith" \
-            --data author_email="john@example.com" \
-            --data python_version="${{ matrix.python-version }}" \
-            --data typing="${{ matrix.typing }}" \
-            --data with_fastapi_api=true \
-            --data with_typer_cli=true
+          extras=$([ "${{ matrix.extras }}" == "all" ] && echo true || echo false)
+          uvx copier copy --vcs-ref=HEAD substrate my-project             --defaults             --data project_name="My Project"             --data project_description="An analysis of simulated data."             --data project_url="https://github.com/user/repo"             --data author_name="Jane Smith"             --data author_email="jane@example.com"             --data python_version="${{ matrix.python-version }}"             --data typing="${{ matrix.typing }}"             --data with_jupytext=$extras             --data with_dvc=$extras             --data with_snakemake=$extras             --data with_citation=$extras
           cd my-project
           git config --global init.defaultBranch main
           git init
@@ -59,10 +49,3 @@ jobs:
             uv lock
             poe lint
             poe test
-
-      - name: Build app Docker image
-        if: ${{ matrix.project-type == 'app' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ./my-project/
-          target: app

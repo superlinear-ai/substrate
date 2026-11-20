@@ -12,6 +12,7 @@ reports/
 *.xls*
 *.zip*
 data/
+!template/data/
 
 # direnv
 .envrc
@@ -26,6 +27,7 @@ data/
 *.ipynb
 .ipynb_checkpoints/
 notebooks/
+!template/notebooks/
 
 # macOS
 .DS_Store
@@ -64,6 +66,7 @@ dist/
 
 # VS Code
 .vscode/
+!template/.vscode/
 
 # Default template
 my-project/

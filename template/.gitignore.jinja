@@ -6,12 +6,14 @@ reports/
 *.rej
 
 # Data
-*.csv*
-*.dat*
+{%- if with_dvc %}
+# DVC adds the data it tracks to .gitignore files next to the data itself.
+{%- else %}
+data/*/*
+!data/*/.gitkeep
+!data/README.md
+{%- endif %}
 *.pickle*
-*.xls*
-*.zip*
-data/
 
 # direnv
 .envrc
@@ -23,9 +25,15 @@ data/
 .hypothesis/
 
 # Jupyter
-*.ipynb
 .ipynb_checkpoints/
-notebooks/
+{%- if with_jupytext %}
+# Notebooks are paired with .py files (Jupytext); git tracks the .py files only.
+notebooks/*.ipynb
+{%- endif %}
+
+# Journal articles (copyrighted PDFs stay local; track the notes about them in notes/)
+literature/**/*.pdf
+literature/**/*.epub
 
 # macOS
 .DS_Store
@@ -43,6 +51,11 @@ site/
 # Node.js
 node_modules/
 
+# Obsidian (personal workspace state; the notes and shared settings are tracked)
+notes/.obsidian/workspace*.json
+notes/.obsidian/cache
+notes/.trash/
+
 # PyCharm
 .idea/
 
@@ -58,17 +71,16 @@ __pycache__/
 *.py[cdo]
 .venv/
 dist/
+{%- if with_snakemake %}
+
+# Snakemake
+.snakemake/
+{%- endif %}
 
 # Ruff
 .ruff_cache/
 
-# Terraform
-.terraform/
-{%- if project_type == 'package' %}
-
-# uv
-uv.lock
-{%- endif %}
-
-# VS Code
-.vscode/
+# VS Code (shared settings are tracked; personal state is not)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

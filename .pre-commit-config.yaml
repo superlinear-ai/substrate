@@ -1,4 +1,4 @@
-# https://pre-commit.com
+# https://prek.j178.dev (prek reads the pre-commit config format)
 default_install_hook_types: [commit-msg, pre-commit]
 default_stages: [pre-commit, manual]
 fail_fast: true
