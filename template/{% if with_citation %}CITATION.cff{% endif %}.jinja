@@ -1,0 +1,24 @@
+# https://citation-file-format.github.io
+cff-version: 1.2.0
+message: If you use this work, please cite it using the metadata from this file.
+title: "{{ project_name }}"
+abstract: "{{ project_description }}"
+type: software
+authors:
+  - family-names: "{{ author_family_names }}"
+    given-names: "{{ author_given_names }}"
+    email: "{{ author_email }}"
+    {%- if author_orcid %}
+    orcid: "{{ author_orcid }}"
+    {%- endif %}
+repository-code: "{{ project_url }}"
+license: {{ citation_license }}
+version: 0.0.0
+# Once a paper is published, point to it so citations are attributed to the paper:
+# preferred-citation:
+#   type: article
+#   title: ""
+#   authors: []
+#   journal: ""
+#   year: 2000
+#   doi: ""

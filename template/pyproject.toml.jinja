@@ -12,22 +12,12 @@ authors = [
 ]
 requires-python = ">={{ python_version }},<4.0"
 dependencies = [
-  {%- if with_fastapi_api %}
-  "fastapi[standard]>=0.141.1",
-  "gunicorn>=26.1.0",
-  {%- endif %}
-  {%- if project_type == 'app' %}
-  "poethepoet>=0.48.0",
-  {%- endif %}
-  {%- if with_typer_cli %}
-  "typer>=0.27.1",
-  {%- endif %}
+  "matplotlib>=3.9.0",
+  "numpy>=2.0.0",
+  "polars>=1.0.0",
+  "scienceplots>=2.1.0",
+  "scipy>=1.14.0",
 ]
-{%- if with_typer_cli %}
-
-[project.scripts]  # https://docs.astral.sh/uv/concepts/projects/config/#command-line-interfaces
-{{ project_name_kebab_case }} = "{{ project_name_snake_case }}.cli:app"
-{%- endif %}
 
 [project.urls]  # https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels
 homepage = "{{ project_url }}"
@@ -35,7 +25,6 @@ source = "{{ project_url }}"
 {%- if with_conventional_commits %}
 changelog = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}blob/main/CHANGELOG.md"
 {%- endif %}
-releasenotes = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}releases"
 documentation = "{{ documentation_url }}"
 issues = "{{ project_url.rstrip('/') }}/{% if ci == 'gitlab' %}-/{% endif %}issues"
 
@@ -46,22 +35,29 @@ dev = [
   "commitizen>=4.17.1",
   {%- endif %}
   "coverage[toml]>=7.15.4",
-  {%- if with_fastapi_api %}
-  "httpx2>=2.12.0",
+  {%- if with_dvc %}
+  "dvc>=3.50.0",
+  {%- endif %}
+  {%- if with_conventional_commits %}
+  "git-cliff>=2.6.0",
   {%- endif %}
   "ipykernel>=7.3.0",
   "ipython>=9.16.1",
   "ipywidgets>=8.1.9",
-  "mkdocs-material>=9.7.7",
-  {%- if project_type == 'package' %}
-  "mkdocstrings[python]>=1.0.6",
-  "poethepoet>=0.48.0",
+  {%- if with_jupytext %}
+  "jupytext>=1.16.0",
   {%- endif %}
-  "pre-commit>=4.6.2",
+  "mkdocs-material>=9.7.7",
+  "nbstripout>=0.8.0",
+  "poethepoet>=0.48.0",
+  "prek>=0.2.0",
   "pytest>=9.1.1",
   "pytest-mock>=3.15.1",
   "pytest-xdist>=3.8.0",
   "ruff>=0.16.3",
+  {%- if with_snakemake %}
+  "snakemake>=9.0.0",
+  {%- endif %}
   "ty>=0.0.73",
   {%- if typing == 'strict' %}
   "typeguard>=4.6.0",
@@ -71,13 +67,13 @@ dev = [
 [tool.codespell]  # https://github.com/codespell-project/codespell
 builtin = "en-GB_to_en-US,clear,code,rare"
 check-filenames = true
-skip = "./*_cache/,./.venv,./reports"
+skip = "./*_cache/,./.venv,./reports,./literature,./notes/.obsidian,./data,./results,./.snakemake"
 {%- if with_conventional_commits %}
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
 bump_message = "bump: v$current_version → v$new_version"
 tag_format = "v$version"
-update_changelog_on_bump = true
+update_changelog_on_bump = false  # git-cliff generates CHANGELOG.md (see `poe changelog`)
 version_provider = "uv"
 {%- endif %}
 
@@ -97,6 +93,11 @@ source = ["src"]
 
 [tool.coverage.xml]  # https://coverage.readthedocs.io/en/latest/config.html#xml
 output = "reports/coverage.xml"
+{%- if with_jupytext %}
+
+[tool.jupytext]  # https://jupytext.readthedocs.io/en/latest/config.html
+formats = "ipynb,py:percent"
+{%- endif %}
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
 addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if typing == 'strict' %} --strict-config --strict-markers{% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
@@ -125,6 +126,10 @@ ignore = ["CPY", "FIX", "T20", "ARG001", "COM812", "D203", "D213", "E501", "PD00
 {%- endif %}
 unfixable = ["ERA001", "F401", "F841", "T201", "T203"]
 
+[tool.ruff.lint.per-file-ignores]
+# Notebooks are scripts: allow top-level code, prints, bare expressions, and no module docstring.
+"notebooks/**" = ["B018", "D100", "E402", "ERA001", "INP001", "PLR2004", "T201", "T203"]
+
 [tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = true
 {%- if typing == 'optional' %}
@@ -142,11 +147,6 @@ max-doc-length = 100
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
-{%- if project_type == 'package' %}
-
-[tool.ty.environment]
-python-platform = "all"
-{%- endif %}
 
 [tool.ty.rules]
 unused-ignore-comment = "warn"
@@ -177,76 +177,39 @@ type = "simple"
     type = "boolean"
     name = "serve"
     options = ["--serve"]
-{%- if with_fastapi_api %}
+{%- if with_jupytext %}
 
-  [tool.poe.tasks.serve]
-  help = "Serve the REST API"
-  control.expr = "dev"
+  [tool.poe.tasks.notebooks]
+  help = "Sync the paired notebooks (.ipynb <-> .py) in notebooks/"
+  shell = "jupytext --sync notebooks/*.py"
+{%- endif %}
+{%- if with_snakemake %}
 
-    [[tool.poe.tasks.serve.switch]]
-    case = "True"
-    cmd = """
-      uvicorn
-        --host $host
-        --port $port
-        --reload
-        {{ project_name_snake_case }}.api:app
-      """
-    use_exec = true
+  [tool.poe.tasks.workflow]
+  help = "Run the Snakemake workflow (pass extra Snakemake arguments after --)"
+  cmd = "snakemake --cores all --snakefile workflow/Snakefile"
 
-    [[tool.poe.tasks.serve.switch]]
-    case = "False"
-    cmd = """
-      gunicorn
-        --access-logfile -
-        --bind $host:$port
-        --graceful-timeout 10
-        --keep-alive 10
-        --log-file -
-        --timeout 30
-        --worker-class uvicorn.workers.UvicornWorker
-        --worker-tmp-dir /dev/shm
-        --workers 2
-        {{ project_name_snake_case }}.api:app
-      """
-    use_exec = true
+  [tool.poe.tasks.dag]
+  help = "Render the workflow's dependency graph to results/dag.svg"
+  shell = "mkdir -p results && snakemake --snakefile workflow/Snakefile --dag | dot -Tsvg > results/dag.svg"
+{%- endif %}
+{%- if with_conventional_commits %}
 
-    [[tool.poe.tasks.serve.args]]
-    help = "Bind socket to this host (default: 0.0.0.0)"
-    name = "host"
-    options = ["--host"]
-    default = "0.0.0.0"
-
-    [[tool.poe.tasks.serve.args]]
-    help = "Bind socket to this port (default: 8000)"
-    name = "port"
-    options = ["--port"]
-    default = "8000"
-
-    [[tool.poe.tasks.serve.args]]
-    help = "Enable development mode"
-    type = "boolean"
-    name = "dev"
-    options = ["--dev"]
-{%- elif project_type == 'app' %}
-
-  [tool.poe.tasks.serve]
-  help = "Serve the app"
-
-    [[tool.poe.tasks.serve.sequence]]
-    cmd = "echo 'Serving app (placeholder)...'"
+  [tool.poe.tasks.changelog]
+  help = "Regenerate CHANGELOG.md from the Conventional Commits history with git-cliff"
+  cmd = "git-cliff --output CHANGELOG.md"
 {%- endif %}
 
   [tool.poe.tasks.lint]
-  help = "Lint this {{ project_type }}"
+  help = "Lint this project"
   cmd = """
-    pre-commit run
+    prek run
       --all-files
       --color always
     """
 
   [tool.poe.tasks.test]
-  help = "Test this {{ project_type }}"
+  help = "Test this project"
 
     [[tool.poe.tasks.test.sequence]]
     cmd = "coverage run"

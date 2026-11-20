@@ -3,51 +3,56 @@
 # {{ project_name }}
 
 {{ project_description }}
-{%- if project_type == 'package' or with_typer_cli %}
 
-## Installing
+## Layout
 
-To install this package, run:
-
-```sh
-pip install {{ project_name_kebab_case }}
-```
+```text
+data/raw/        original, immutable data
+data/interim/    intermediate data
+data/processed/  analysis-ready data
+notebooks/       exploratory and reporting notebooks{% if with_jupytext %} (paired .py files are tracked){% endif %}
+src/             reusable analysis code
+results/         generated figures and tables
+notes/           Obsidian vault with research notes
+literature/      journal articles (PDFs are git-ignored)
+{%- if with_snakemake %}
+workflow/        Snakemake workflow
 {%- endif %}
+```
 
 ## Using
-{%- if with_typer_cli %}
 
-To view the CLI help information, run:
+Start the development environment (see [Contributing](#contributing)), then:
 
-```sh
-{{ project_name_kebab_case }} --help
-```
-{%- elif project_type == 'app' %}
-
-To serve this app, run:
-
-```sh
-docker compose up app
-```
-{%- if with_fastapi_api %}
-
-and open [localhost:8000](http://localhost:8000) in your browser.
+- Import project code from notebooks with `from {{ project_name_snake_case }}.paths import RAW_DATA`.
+- Apply publication-quality plot styles with `from {{ project_name_snake_case }}.plotting import use_style`.
+{%- if with_jupytext %}
+- Run `poe notebooks` to sync each paired notebook (`.ipynb` and `.py`) after editing either one.
 {%- endif %}
+{%- if with_snakemake %}
+- Run `poe workflow` to reproduce the results, and `poe dag` to draw the workflow's dependency graph.
+{%- endif %}
+{%- if with_dvc %}
 
-Within the Dev Container this is equivalent to:
+### Versioning data with DVC
+
+Initialise DVC once, configure a remote, then track your data:
 
 ```sh
-poe serve
+dvc init
+dvc remote add --default storage <url>
+dvc add data/raw
+git add data/raw.dvc data/.gitignore
+dvc push
 ```
-{%- else %}
 
-Example usage:
+Collaborators fetch the data with `dvc pull`.
+{%- endif %}
+{%- if with_citation %}
 
-```python
-import {{ project_name_snake_case }}
+## Citing
 
-...
-```
+Citation metadata is in [`CITATION.cff`](CITATION.cff), and the data's provenance and dictionary are in [`data/README.md`](data/README.md).
 {%- endif %}
 
 ## Contributing
@@ -97,8 +102,8 @@ The following development environments are supported:
     # Activate the virtual environment
     source .venv/bin/activate
 
-    # Install the pre-commit hooks
-    pre-commit install --install-hooks
+    # Install the git hooks with prek
+    prek install --install-hooks
     ```
 
 1. _VS Code Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
@@ -109,13 +114,13 @@ The following development environments are supported:
 <details open>
 <summary>Developing</summary>
 {% if with_conventional_commits %}
-- This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard to automate [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) with [Commitizen](https://github.com/commitizen-tools/commitizen).
+- This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard to automate [Semantic Versioning](https://semver.org/) with [Commitizen](https://github.com/commitizen-tools/commitizen) and to generate the changelog with [git-cliff](https://git-cliff.org).
 {%- endif %}
 - Run `poe` from within the development environment to print a list of [Poe the Poet](https://github.com/nat-n/poethepoet) tasks available to run on this project.
 - Run `uv add {package}` from within the development environment to install a run time dependency and add it to `pyproject.toml` and `uv.lock`. Add `--dev` to install a development dependency.
 - Run `uv sync --upgrade` from within the development environment to upgrade all dependencies to the latest versions allowed by `pyproject.toml`. Add `--only-dev` to upgrade the development dependencies only.
 {%- if with_conventional_commits %}
-- Run `cz bump` to bump the {{ project_type }}'s version, update the `CHANGELOG.md`, and create a git tag. Then push the changes and the git tag with `git push origin main --tags`.
+- Run `cz bump` to bump the project's version and create a git tag, `poe changelog` to regenerate `CHANGELOG.md`, and `git push origin main --tags` to publish them.
 {%- endif %}
 
 </details>

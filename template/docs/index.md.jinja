@@ -1,3 +1,19 @@
 # {{ project_name }}
 
 {{ project_description }}
+
+## Project layout
+
+| Folder         | Contents                                                                  |
+| -------------- | ------------------------------------------------------------------------- |
+| `data/raw/`    | Original, immutable data. Never edit these files by hand.                 |
+| `data/interim/` | Intermediate data that has been transformed.                              |
+| `data/processed/` | Final, analysis-ready data.                                            |
+| `notebooks/`   | Exploratory and reporting notebooks.                                      |
+| `src/`         | Reusable analysis code, imported by notebooks{% if with_snakemake %} and the workflow{% endif %}. |
+| `results/`     | Generated figures and tables.                                             |
+| `notes/`       | An [Obsidian](https://obsidian.md) vault with research notes.             |
+| `literature/`  | Journal articles (PDFs stay local) and reference exports.                 |
+{%- if with_snakemake %}
+| `workflow/`    | The Snakemake workflow that reproduces the results.                       |
+{%- endif %}

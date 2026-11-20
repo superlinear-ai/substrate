@@ -4,20 +4,15 @@
     "service": "devcontainer",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/",
     "features": {
-        {%- if project_type == 'app' %}
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {
-            "moby": false
-        },
-        {%- endif %}
         "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
-            "packages": "starship"
+            "packages": "starship{% if with_snakemake %} graphviz{% endif %}"
         }
     },
     "overrideCommand": true,
     "remoteUser": "user",
     "onCreateCommand": "sudo chown -R user:user /opt/",
-    "updateContentCommand": "uv sync --python ${localEnv:PYTHON_VERSION:{{ python_version }}} {% if project_type == 'package' %}--resolution ${localEnv:RESOLUTION_STRATEGY:highest} {% endif %}--all-extras",
-    "postCreateCommand": "pre-commit install --install-hooks",
+    "updateContentCommand": "uv sync --python ${localEnv:PYTHON_VERSION:{{ python_version }}} --all-extras",
+    "postCreateCommand": "prek install --install-hooks",
     "customizations": {
         "jetbrains": {
             "backend": "PyCharm",
@@ -36,36 +31,19 @@
                 "GitLab.gitlab-workflow",
                 {%- endif %}
                 "ms-azuretools.vscode-containers",
+                {%- if with_jupytext %}
+                "congyiwu.vscode-jupytext",
+                {%- endif %}
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "tamasfe.even-better-toml"
             ],
             "settings": {
-                "[python]": {
-                    "editor.codeActionsOnSave": {
-                        "source.fixAll.ruff": "explicit",
-                        "source.organizeImports.ruff": "explicit"
-                    },
-                    "editor.defaultFormatter": "charliermarsh.ruff",
-                    "editor.formatOnSave": true
-                },
-                "[toml]": {
-                    "editor.formatOnSave": false
-                },
-                "editor.rulers": [
-                    100
-                ],
                 "jupyter.kernels.excludePythonEnvironments": [
                     "/usr/local/bin/python"
                 ],
-                "notebook.codeActionsOnSave": {
-                    "notebook.source.fixAll": "explicit",
-                    "notebook.source.organizeImports": "explicit"
-                },
-                "notebook.formatOnSave.enabled": true,
                 "python-envs.terminal.autoActivationType": "off",
                 "python.defaultInterpreterPath": "/opt/venv/bin/python",
-                "python.testing.pytestEnabled": true,
                 "terminal.integrated.env.linux": {
                     "GIT_EDITOR": "code --wait"
                 }

@@ -1,4 +1,4 @@
-# https://pre-commit.com
+# https://prek.j178.dev (prek reads the pre-commit config format)
 default_install_hook_types: [commit-msg, pre-commit]
 default_stages: [pre-commit, manual]
 fail_fast: true
@@ -54,7 +54,6 @@ repos:
         language: system
         stages: [commit-msg]
       {%- endif %}
-      {%- if project_type == 'app' %}
       - id: uv-lock-check
         name: uv lock check
         entry: uv lock
@@ -62,7 +61,11 @@ repos:
         require_serial: true
         language: system
         pass_filenames: false
-      {%- endif %}
+      - id: nbstripout
+        name: nbstripout
+        entry: nbstripout
+        language: system
+        types: [jupyter]
       - id: ruff-check
         name: ruff check
         entry: ruff check

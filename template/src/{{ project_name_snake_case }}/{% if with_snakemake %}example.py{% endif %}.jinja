@@ -1,0 +1,39 @@
+"""A minimal example analysis step: simulate a noisy signal, fit it, and plot the result.
+
+Run as ``python -m {{ project_name_snake_case }}.example results/figures/example.png``.
+"""
+
+import sys
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import curve_fit
+
+from {{ project_name_snake_case }}.plotting import use_style
+
+
+def decay(t: np.ndarray, amplitude: float, rate: float) -> np.ndarray:
+    """Evaluate an exponential decay."""
+    return amplitude * np.exp(-rate * t)
+
+
+def make_example_figure(output: Path, *, seed: int = 0) -> None:
+    """Fit an exponential decay to simulated data and save the figure to `output`."""
+    rng = np.random.default_rng(seed)
+    t = np.linspace(0, 5, 50)
+    y = decay(t, 2.0, 1.3) + rng.normal(scale=0.05, size=t.size)
+    (amplitude, rate), _ = curve_fit(decay, t, y, p0=(1.0, 1.0))
+
+    use_style()
+    fig, ax = plt.subplots()
+    ax.plot(t, y, "o", label="data")
+    ax.plot(t, decay(t, amplitude, rate), "-", label=f"fit (rate = {rate:.2f})")
+    ax.set(xlabel="Time (s)", ylabel="Signal (a.u.)")
+    ax.legend()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output)
+
+
+if __name__ == "__main__":
+    make_example_figure(Path(sys.argv[1]))

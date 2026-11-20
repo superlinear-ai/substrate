@@ -22,15 +22,11 @@ updates:
       prefix-development: "build"
       include: scope
     allow:
-      {%- if project_type == 'app' %}
       - dependency-type: production
-      {%- endif %}
       - dependency-type: development
     versioning-strategy: increase
     groups:
-      {%- if project_type == 'app' %}
       runtime-dependencies:
         dependency-type: production
-      {%- endif %}
       development-dependencies:
         dependency-type: development

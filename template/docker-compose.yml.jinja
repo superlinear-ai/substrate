@@ -6,18 +6,6 @@ services:
     volumes:
       - ..:/workspaces
       - command-history-volume:/home/user/.history/
-  {%- if project_type == 'app' %}
-
-  app:
-    build:
-      target: app
-    {%- if with_fastapi_api %}
-    ports:
-      - "8000:8000"
-    {%- endif %}
-    profiles:
-      - app
-  {%- endif %}
 
 volumes:
   command-history-volume:

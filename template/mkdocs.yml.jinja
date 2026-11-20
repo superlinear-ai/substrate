@@ -19,22 +19,9 @@ theme:
 
 nav:
   - Home: index.md
-{%- if project_type == 'package' %}
-  - Reference: reference.md
-
-watch:
-  - src
-{%- endif %}
 
 plugins:
   - search
-{%- if project_type == 'package' %}
-  - mkdocstrings:
-      handlers:
-        python:
-          options:
-            docstring_style: numpy
-{%- endif %}
 
 markdown_extensions:
   - pymdownx.highlight

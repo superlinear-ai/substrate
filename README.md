@@ -1,27 +1,24 @@
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/superlinear-ai/substrate) [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/superlinear-ai/substrate) [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-black.json)](https://github.com/copier-org/copier)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/blairium/substrate-science) [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/blairium/substrate-science) [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-black.json)](https://github.com/copier-org/copier)
 
-# 🌱 Substrate
+# 🌱 Substrate Science
 
-A modern [Copier template](https://github.com/copier-org/copier) for scaffolding Python packages and apps.
-
-<video src="https://github.com/user-attachments/assets/28d23137-ebae-47d8-a6e5-11f66abf2a91" controls preload></video>
+A [Copier template](https://github.com/copier-org/copier) for reproducible scientific data analysis projects in Python. Forked from [blairium/substrate-science](https://github.com/blairium/substrate-science).
 
 ## 🎁 Features
 
-- 🧑‍💻 One-click development environments with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) and [GitHub Codespaces](https://github.com/features/codespaces)
-- 🌈 Cross-platform support for Linux, macOS, and Windows
-- 🐚 Modern shell prompt with [Starship](https://github.com/starship/starship)
+- 🔬 Analysis layout: `data/{raw,interim,processed}`, `notebooks/`, `src/`, `results/`, an [Obsidian](https://obsidian.md) vault in `notes/`, and `literature/` for journal articles
+- 🧮 [NumPy](https://numpy.org), [SciPy](https://scipy.org), [Matplotlib](https://matplotlib.org), [SciencePlots](https://github.com/garrettj403/SciencePlots), and [Polars](https://pola.rs) preinstalled
+- 📓 Optional [Jupytext](https://jupytext.readthedocs.io) notebook pairing, plus [nbstripout](https://github.com/kynan/nbstripout)
+- 🗄 Optional data versioning with [DVC](https://dvc.org)
+- 🐍 Optional reproducible workflows with [Snakemake](https://snakemake.github.io)
+- 📄 Optional paper and citation metadata (`CITATION.cff`, data dictionary)
+- 🧑‍💻 One-click development environments with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) and [GitHub Codespaces](https://github.com/features/codespaces), with VS Code format, lint, and import sorting on save
 - 📦 Packaging and dependency management with [uv](https://github.com/astral-sh/uv)
-- 🚚 Installing from and publishing to [PyPI](https://pypi.org/)
 - ⚡️ Task running with [Poe the Poet](https://github.com/nat-n/poethepoet)
-- 💅 Code formatting with [ruff](https://github.com/astral-sh/ruff)
-- ✅ Code linting with [pre-commit](https://pre-commit.com/), [ruff](https://github.com/astral-sh/ruff), and [ty](https://github.com/astral-sh/ty)
-- 🏷 Optionally follow the [Conventional Commits](https://www.conventionalcommits.org/) standard
-- 🚦 Release new versions with [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) using [Commitizen](https://github.com/commitizen-tools)
-- 💌 Verified commits with [GPG](https://gnupg.org/)
+- 💅 Formatting and linting with [ruff](https://github.com/astral-sh/ruff), type checking with [ty](https://github.com/astral-sh/ty), and git hooks with [prek](https://github.com/j178/prek)
+- 🏷 Optional [Conventional Commits](https://www.conventionalcommits.org/), with changelogs from [git-cliff](https://git-cliff.org) and version bumps from [Commitizen](https://github.com/commitizen-tools)
 - ♻️ Continuous integration with [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - 🧪 Test coverage with [Coverage.py](https://github.com/nedbat/coveragepy)
-- 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
 - 📚 Documentation with [MkDocs](https://github.com/mkdocs/mkdocs)
 
 ## ✨ Using
@@ -29,12 +26,12 @@ A modern [Copier template](https://github.com/copier-org/copier) for scaffolding
 > [!TIP]
 > You should first [install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to run the commands below.
 
-### Create a new Python project
+### Create a new analysis project
 
-To create a new Python project with this template, run:
+To create a new analysis project with this template, run:
 
 ```sh
-uvx copier copy gh:superlinear-ai/substrate path/to/local/repository
+uvx copier copy gh:blairium/substrate-science path/to/local/repository
 ```
 
 ### Update your Python project
@@ -98,8 +95,8 @@ If your project is on GitHub, your docs will be published automatically to GitHu
 
 The following development environments are supported:
 
-1. ⭐️ _GitHub Codespaces_: click on [Open in GitHub Codespaces](https://github.com/codespaces/new/superlinear-ai/substrate) to start developing in your browser.
-2. ⭐️ _VS Code Dev Container (with container volume)_: click on [Open in Dev Containers](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/superlinear-ai/substrate) to clone this repository in a container volume and create a Dev Container with VS Code.
+1. ⭐️ _GitHub Codespaces_: click on [Open in GitHub Codespaces](https://github.com/codespaces/new/blairium/substrate-science) to start developing in your browser.
+2. ⭐️ _VS Code Dev Container (with container volume)_: click on [Open in Dev Containers](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/blairium/substrate-science) to clone this repository in a container volume and create a Dev Container with VS Code.
 3. ⭐️ _uv_: clone this repository and run the following from root of the repository:
 
     ```sh
@@ -110,7 +107,7 @@ The following development environments are supported:
     source .venv/bin/activate
 
     # Install the pre-commit hooks
-    pre-commit install --install-hooks
+    prek install --install-hooks
     ```
 
 4. _VS Code Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
@@ -122,6 +119,6 @@ The following development environments are supported:
 <summary>Developing</summary>
 
 - This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard to automate [Semantic Versioning](https://semver.org/) and [Keep A Changelog](https://keepachangelog.com/) with [Commitizen](https://github.com/commitizen-tools/commitizen).
-- Run `cz bump` to bump Substrate's version, update the `CHANGELOG.md`, and create a git tag. Then push the changes and the git tag with `git push origin main --tags`.
+- Run `cz bump` to bump the template's version, update the `CHANGELOG.md`, and create a git tag. Then push the changes and the git tag with `git push origin main --tags`.
 
 </details>

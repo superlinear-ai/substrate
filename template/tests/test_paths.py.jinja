@@ -1,0 +1,14 @@
+"""Test {{ project_name }}'s project paths."""
+
+from {{ project_name_snake_case }} import paths
+
+
+def test_project_root_contains_pyproject() -> None:
+    """Test that the project root is located correctly."""
+    assert (paths.PROJECT_ROOT / "pyproject.toml").is_file()
+
+
+def test_data_directories_are_under_data() -> None:
+    """Test that the data directories live under the data directory."""
+    for directory in (paths.RAW_DATA, paths.INTERIM_DATA, paths.PROCESSED_DATA):
+        assert directory.parent == paths.DATA

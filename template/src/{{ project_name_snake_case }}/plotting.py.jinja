@@ -1,0 +1,15 @@
+"""Plotting helpers."""
+
+import matplotlib.pyplot as plt
+import scienceplots  # noqa: F401  # Registers the SciencePlots styles with Matplotlib.
+
+
+def use_style(*, latex: bool = False) -> None:
+    """Apply a publication-quality SciencePlots style to all subsequent figures.
+
+    Parameters
+    ----------
+    latex
+        Render text with LaTeX. This requires a LaTeX installation; leave it off otherwise.
+    """
+    plt.style.use(["science", "ieee"] if latex else ["science", "ieee", "no-latex"])
