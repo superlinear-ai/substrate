@@ -2,7 +2,7 @@
 
 # 🌱 Substrate Science
 
-A [Copier template](https://github.com/copier-org/copier) for reproducible scientific data analysis projects in Python. Forked from [blairium/substrate-science](https://github.com/blairium/substrate-science).
+A [Copier template](https://github.com/copier-org/copier) for reproducible scientific data analysis projects in Python. Forked from [superlinear-ai/substrate](https://github.com/superlinear-ai/substrate).
 
 ## 🎁 Features
 
@@ -34,27 +34,56 @@ To create a new analysis project with this template, run:
 uvx copier copy gh:blairium/substrate-science path/to/local/repository
 ```
 
-### Update your Python project
+### Options
 
-To update your Python project to the latest template version, run:
+You are asked the following questions when you create a project:
 
-```sh
-uvx copier update --exclude src/ --exclude tests/
+| Option                      | Default    | What it adds                                                                                          |
+| --------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- |
+| `typing`                    | `optional` | `strict` turns on stricter ruff and ty settings, runtime type checks, and a coverage threshold        |
+| `with_conventional_commits` | on         | Commit message checks with Commitizen, changelog generation with git-cliff (`poe changelog`)          |
+| `with_jupytext`             | on         | Pairs notebooks with `.py` files so git tracks the `.py`; `poe notebooks` syncs them                  |
+| `with_dvc`                  | off        | [DVC](https://dvc.org) for large data files, with setup steps in the project README                   |
+| `with_snakemake`            | off        | A `workflow/Snakefile` with an example step; `poe workflow` runs it and `poe dag` draws the graph     |
+| `with_citation`             | off        | `CITATION.cff` and a `data/README.md` with provenance and data dictionary tables                      |
+
+### What you get
+
+```text
+data/{raw,interim,processed}/   data, git-ignored (unless you use DVC)
+notebooks/                      notebooks; paired .py files are tracked
+notes/                          Obsidian vault
+literature/                     journal articles; PDFs are git-ignored
+results/{figures,tables}/       generated outputs
+src/<package>/                  reusable code (paths.py, plotting.py)
+tests/                          pytest tests
+workflow/                       Snakemake workflow (optional)
 ```
 
-### Release a new version of your Python project
+Common tasks inside the project's development environment: `poe lint`, `poe test`, `poe docs --serve`, `poe notebooks`, `poe workflow`, and `poe changelog`. Saving a file in VS Code formats it with ruff and fixes lint issues and import order.
+
+### Update your analysis project
+
+To update your project to the latest template version, run:
+
+```sh
+uvx copier update --exclude src/ --exclude tests/ --exclude notebooks/ --exclude notes/ --exclude literature/
+```
+
+### Release a new version of your project
 
 If you have enabled [Conventional Commits](https://www.conventionalcommits.org/), you can create a new version tag and update `CHANGELOG.md` based on your commit messages with:
 
 ```sh
 git checkout main
 cz bump
+poe changelog
 git push origin main --tags
 ```
 
-### Build and publish your Python project's docs
+### Build and publish your project's docs
 
-To build and serve your Python project's docs, run:
+To build and serve your project's docs, run:
 
 ```sh
 poe docs --serve
@@ -106,7 +135,7 @@ The following development environments are supported:
     # Activate the virtual environment
     source .venv/bin/activate
 
-    # Install the pre-commit hooks
+    # Install the git hooks with prek
     prek install --install-hooks
     ```
 

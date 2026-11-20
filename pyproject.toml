@@ -1,11 +1,11 @@
 [project]
-name = "substrate"
+name = "substrate-science"
 version = "2.1.0"
 requires-python = ">=3.13,<3.14"
 dependencies = [
     "commitizen>=4.17.1",
     "copier>=9.17.1",
-    "pre-commit>=4.6.2",
+    "prek>=0.2.0",
     "ruff>=0.16.3",
     "ty>=0.0.73",
 ]
